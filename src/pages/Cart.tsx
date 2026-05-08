@@ -33,7 +33,7 @@ const Cart: React.FC = () => {
       if (response.ok) {
         clearCart();
         alert('Order placed successfully!');
-        navigate('/orders');
+        navigate('/pesanan');
       } else {
         alert('Failed to place order. Please try again.');
       }
