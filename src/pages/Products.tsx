@@ -198,7 +198,7 @@ const Products: React.FC = () => {
                   </div>
                   <div className="flex space-x-2">
                     <Link
-                      to={`/products/${product.id}`}
+                      to={`/produk/${product.id}`}
                       className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-md hover:bg-gray-200 transition-colors text-center text-sm"
                     >
                       Lihat Detail
