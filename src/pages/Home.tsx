@@ -160,7 +160,7 @@ const Home: React.FC = () => {
           )}
           <div className="text-center mt-12">
             <Link
-              to="/products"
+              to="/produk"
               className="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors inline-flex items-center"
             >
               Lihat Semua Produk
