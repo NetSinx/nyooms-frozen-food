@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { ShoppingCart, Heart, User, Menu, X, LogOut, Settings } from 'lucide-react';
-
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { getCartCount } = useCart();
@@ -12,13 +11,11 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
   const handleLogout = () => {
     logout();
     navigate('/');
     setIsUserMenuOpen(false);
   };
-
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,11 +24,9 @@ const Navbar: React.FC = () => {
             <img src="/assets/images/Logo Frozen Food Nyooms.png" alt="Logo" width="50" />
             <span className="text-xl font-bold text-gray-800">Nyooms Frozen Food</span>
           </Link>
-
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-700 hover:text-red-600 transition-colors">Beranda</Link>
             <Link to="/produk" className="text-gray-700 hover:text-red-600 transition-colors">Produk</Link>
-            
             {user && (
               <>
                 <Link to="/keranjang" className="relative text-gray-700 hover:text-red-600 transition-colors">
@@ -52,7 +47,6 @@ const Navbar: React.FC = () => {
                 </Link>
               </>
             )}
-
             {user ? (
               <div className="relative">
                 <button
@@ -62,7 +56,6 @@ const Navbar: React.FC = () => {
                   <User className="w-6 h-6" />
                   <span>{user.name}</span>
                 </button>
-                
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                     <Link
@@ -118,8 +111,7 @@ const Navbar: React.FC = () => {
               </div>
             )}
           </div>
-
-          {/* Mobile menu button */}
+          {}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -129,8 +121,7 @@ const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
+        {}
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -148,7 +139,6 @@ const Navbar: React.FC = () => {
               >
                 Products
               </Link>
-              
               {user ? (
                 <>
                   <Link
@@ -225,5 +215,4 @@ const Navbar: React.FC = () => {
     </nav>
   );
 };
-
 export default Navbar;

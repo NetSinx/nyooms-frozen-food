@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Package, Clock, CheckCircle, XCircle } from 'lucide-react';
-
 interface OrderItem {
   productId: string;
   quantity: number;
@@ -11,7 +10,6 @@ interface OrderItem {
     image: string;
   };
 }
-
 interface Order {
   id: string;
   items: OrderItem[];
@@ -20,16 +18,13 @@ interface Order {
   createdAt: string;
   shippingAddress: string;
 }
-
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
-
   useEffect(() => {
     fetchOrders();
   }, []);
-
   const fetchOrders = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/orders', {
@@ -37,7 +32,6 @@ const Orders: React.FC = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-
       if (response.ok) {
         const data = await response.json();
         setOrders(data);
@@ -48,7 +42,6 @@ const Orders: React.FC = () => {
       setLoading(false);
     }
   };
-
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending':
@@ -61,7 +54,6 @@ const Orders: React.FC = () => {
         return <Package className="w-5 h-5 text-gray-500" />;
     }
   };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
@@ -74,7 +66,6 @@ const Orders: React.FC = () => {
         return 'bg-gray-100 text-gray-800';
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -86,7 +77,6 @@ const Orders: React.FC = () => {
       </div>
     );
   }
-
   if (orders.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -100,12 +90,10 @@ const Orders: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">My Orders</h1>
-
         <div className="space-y-6">
           {orders.map((order) => (
             <div key={order.id} className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -125,7 +113,6 @@ const Orders: React.FC = () => {
                   </div>
                 </div>
               </div>
-
               <div className="p-6">
                 <div className="space-y-4">
                   {order.items.map((item, index) => (
@@ -149,7 +136,6 @@ const Orders: React.FC = () => {
                     </div>
                   ))}
                 </div>
-
                 <div className="border-t border-gray-200 mt-6 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-gray-900">Total:</span>
@@ -166,5 +152,4 @@ const Orders: React.FC = () => {
     </div>
   );
 };
-
 export default Orders;

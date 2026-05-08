@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,23 +10,18 @@ const Login: React.FC = () => {
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     const success = await login(email, password);
-
     if (success) {
       navigate("/");
     } else {
       setError("Invalid email or password");
     }
-
     setLoading(false);
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -44,14 +38,12 @@ const Login: React.FC = () => {
               Masukkan detail akun Anda dibawah
             </p>
           </div>
-
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
               <div className="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded">
                 {error}
               </div>
             )}
-
             <div>
               <label
                 htmlFor="email"
@@ -76,7 +68,6 @@ const Login: React.FC = () => {
                 />
               </div>
             </div>
-
             <div>
               <label
                 htmlFor="password"
@@ -112,7 +103,6 @@ const Login: React.FC = () => {
                 </button>
               </div>
             </div>
-
             <div>
               <button
                 type="submit"
@@ -123,7 +113,6 @@ const Login: React.FC = () => {
               </button>
             </div>
           </form>
-
           <div className="mt-6 text-center">
             <p className="mt-2 text-sm text-gray-600">
               Tidak punya akun ?{" "}
@@ -140,5 +129,4 @@ const Login: React.FC = () => {
     </div>
   );
 };
-
 export default Login;

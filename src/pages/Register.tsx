@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,46 +15,38 @@ const Register: React.FC = () => {
   const [error, setError] = useState("");
   const { register } = useAuth();
   const navigate = useNavigate();
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       setLoading(false);
       return;
     }
-
     if (formData.password.length < 6) {
       setError("Password must be at least 6 characters long");
       setLoading(false);
       return;
     }
-
     const success = await register(
       formData.email,
       formData.password,
       formData.name
     );
-
     if (success) {
       navigate("/");
     } else {
       setError("Registration failed. Please try again.");
     }
-
     setLoading(false);
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -69,14 +60,12 @@ const Register: React.FC = () => {
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-5">Register Akun</h2>
           </div>
-
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
               <div className="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded">
                 {error}
               </div>
             )}
-
             <div>
               <label
                 htmlFor="name"
@@ -101,7 +90,6 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-
             <div>
               <label
                 htmlFor="email"
@@ -126,7 +114,6 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-
             <div>
               <label
                 htmlFor="password"
@@ -162,7 +149,6 @@ const Register: React.FC = () => {
                 </button>
               </div>
             </div>
-
             <div>
               <label
                 htmlFor="confirmPassword"
@@ -198,7 +184,6 @@ const Register: React.FC = () => {
                 </button>
               </div>
             </div>
-
             <p className="mt-2 text-sm text-gray-600 text-center">
               Sudah punya akun ?{" "}
               <Link
@@ -208,7 +193,6 @@ const Register: React.FC = () => {
                 Login
               </Link>
             </p>
-            
             <div>
               <button
                 type="submit"
@@ -224,5 +208,4 @@ const Register: React.FC = () => {
     </div>
   );
 };
-
 export default Register;

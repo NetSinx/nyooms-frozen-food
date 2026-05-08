@@ -4,7 +4,6 @@ import { ShoppingCart, Heart, ArrowLeft, Plus, Minus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
-
 interface Product {
   id: string;
   name: string;
@@ -16,7 +15,6 @@ interface Product {
     name: string;
   };
 }
-
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
@@ -25,13 +23,11 @@ const ProductDetail: React.FC = () => {
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
-
   useEffect(() => {
     if (id) {
       fetchProduct(id);
     }
   }, [id]);
-
   const fetchProduct = async (productId: string) => {
     try {
       const response = await fetch(`http://localhost:3001/api/products/${productId}`);
@@ -45,7 +41,6 @@ const ProductDetail: React.FC = () => {
       setLoading(false);
     }
   };
-
   const handleAddToCart = () => {
     if (!user) {
       alert('Please login to add items to cart');
@@ -55,7 +50,6 @@ const ProductDetail: React.FC = () => {
       addToCart(product, quantity);
     }
   };
-
   const handleAddToWishlist = () => {
     if (!user) {
       alert('Please login to add items to wishlist');
@@ -65,14 +59,12 @@ const ProductDetail: React.FC = () => {
       addToWishlist(product);
     }
   };
-
   const handleQuantityChange = (change: number) => {
     const newQuantity = quantity + change;
     if (newQuantity >= 1 && newQuantity <= (product?.stock || 0)) {
       setQuantity(newQuantity);
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -80,7 +72,6 @@ const ProductDetail: React.FC = () => {
       </div>
     );
   }
-
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -93,11 +84,10 @@ const ProductDetail: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
+        {}
         <Link
           to="/products"
           className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-8"
@@ -105,10 +95,9 @@ const ProductDetail: React.FC = () => {
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Products
         </Link>
-
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
-            {/* Product Image */}
+            {}
             <div className="relative">
               <img
                 src={product.image}
@@ -131,8 +120,7 @@ const ProductDetail: React.FC = () => {
                 </span>
               )}
             </div>
-
-            {/* Product Details */}
+            {}
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
@@ -140,17 +128,14 @@ const ProductDetail: React.FC = () => {
                   Rp {product.price.toLocaleString()}
                 </p>
               </div>
-
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Description</h3>
                 <p className="text-gray-600 leading-relaxed">{product.description}</p>
               </div>
-
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">Stock</h3>
                 <p className="text-gray-600">{product.stock} items available</p>
               </div>
-
               {product.stock > 0 && (
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Quantity</h3>
@@ -175,7 +160,6 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </div>
               )}
-
               <div className="flex space-x-4">
                 <button
                   onClick={handleAddToCart}
@@ -196,7 +180,6 @@ const ProductDetail: React.FC = () => {
                   <Heart className="w-5 h-5" />
                 </button>
               </div>
-
               {product.stock === 0 && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                   <p className="text-red-700 font-medium">This product is currently out of stock.</p>
@@ -209,5 +192,4 @@ const ProductDetail: React.FC = () => {
     </div>
   );
 };
-
 export default ProductDetail;

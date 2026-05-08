@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Plus, Edit, Trash2, X } from 'lucide-react';
-
 interface Category {
   id: string;
   name: string;
   description: string;
   createdAt: string;
 }
-
 const AdminCategories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,11 +17,9 @@ const AdminCategories: React.FC = () => {
     description: ''
   });
   const { token } = useAuth();
-
   useEffect(() => {
     fetchCategories();
   }, []);
-
   const fetchCategories = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/categories');
@@ -37,17 +33,13 @@ const AdminCategories: React.FC = () => {
       setLoading(false);
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     try {
-      const url = editingCategory 
+      const url = editingCategory
         ? `http://localhost:3001/api/categories/${editingCategory.id}`
         : 'http://localhost:3001/api/categories';
-      
       const method = editingCategory ? 'PUT' : 'POST';
-      
       const response = await fetch(url, {
         method,
         headers: {
@@ -56,7 +48,6 @@ const AdminCategories: React.FC = () => {
         },
         body: JSON.stringify(formData)
       });
-
       if (response.ok) {
         fetchCategories();
         handleCloseModal();
@@ -68,12 +59,10 @@ const AdminCategories: React.FC = () => {
       alert('Failed to save category');
     }
   };
-
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this category?')) {
       return;
     }
-
     try {
       const response = await fetch(`http://localhost:3001/api/categories/${id}`, {
         method: 'DELETE',
@@ -81,7 +70,6 @@ const AdminCategories: React.FC = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-
       if (response.ok) {
         fetchCategories();
       } else {
@@ -92,7 +80,6 @@ const AdminCategories: React.FC = () => {
       alert('Failed to delete category');
     }
   };
-
   const handleEdit = (category: Category) => {
     setEditingCategory(category);
     setFormData({
@@ -101,7 +88,6 @@ const AdminCategories: React.FC = () => {
     });
     setShowModal(true);
   };
-
   const handleCloseModal = () => {
     setShowModal(false);
     setEditingCategory(null);
@@ -110,7 +96,6 @@ const AdminCategories: React.FC = () => {
       description: ''
     });
   };
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,7 +109,6 @@ const AdminCategories: React.FC = () => {
             Add Category
           </button>
         </div>
-
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
@@ -186,8 +170,7 @@ const AdminCategories: React.FC = () => {
             </div>
           </div>
         )}
-
-        {/* Modal */}
+        {}
         {showModal && (
           <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
@@ -202,7 +185,6 @@ const AdminCategories: React.FC = () => {
                   <X className="w-6 h-6" />
                 </button>
               </div>
-
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -217,7 +199,6 @@ const AdminCategories: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
-
                 <div>
                   <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
                     Description
@@ -231,7 +212,6 @@ const AdminCategories: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
-
                 <div className="flex justify-end space-x-3 pt-4">
                   <button
                     type="button"
@@ -255,5 +235,4 @@ const AdminCategories: React.FC = () => {
     </div>
   );
 };
-
 export default AdminCategories;

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Save } from 'lucide-react';
-
 const Profile: React.FC = () => {
   const { user, token } = useAuth();
   const [name, setName] = useState(user?.name || '');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-
     try {
       const response = await fetch('http://localhost:3001/api/user/profile', {
         method: 'PUT',
@@ -22,10 +19,8 @@ const Profile: React.FC = () => {
         },
         body: JSON.stringify({ name })
       });
-
       if (response.ok) {
         setMessage('Profile updated successfully!');
-        // Update localStorage
         if (user) {
           const updatedUser = { ...user, name };
           localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -39,7 +34,6 @@ const Profile: React.FC = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -55,18 +49,16 @@ const Profile: React.FC = () => {
               </div>
             </div>
           </div>
-
           <div className="p-6">
             {message && (
               <div className={`mb-6 px-4 py-3 rounded ${
-                message.includes('successfully') 
+                message.includes('successfully')
                   ? 'bg-green-50 border border-green-200 text-green-700'
                   : 'bg-red-50 border border-red-200 text-red-700'
               }`}>
                 {message}
               </div>
             )}
-
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -86,7 +78,6 @@ const Profile: React.FC = () => {
                 </div>
                 <p className="mt-1 text-sm text-gray-500">Email cannot be changed</p>
               </div>
-
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name
@@ -106,7 +97,6 @@ const Profile: React.FC = () => {
                   />
                 </div>
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Account Type
@@ -121,7 +111,6 @@ const Profile: React.FC = () => {
                   </span>
                 </div>
               </div>
-
               <div className="pt-4">
                 <button
                   type="submit"
@@ -145,5 +134,4 @@ const Profile: React.FC = () => {
     </div>
   );
 };
-
 export default Profile;

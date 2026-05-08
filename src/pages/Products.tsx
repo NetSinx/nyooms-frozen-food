@@ -4,7 +4,6 @@ import { ShoppingCart, Heart, Search, Filter } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
-
 interface Product {
   id: string;
   name: string;
@@ -17,12 +16,10 @@ interface Product {
     name: string;
   };
 }
-
 interface Category {
   id: string;
   name: string;
 }
-
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -33,12 +30,10 @@ const Products: React.FC = () => {
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
-
   useEffect(() => {
     fetchProducts();
     fetchCategories();
   }, []);
-
   const fetchProducts = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/products');
@@ -50,7 +45,6 @@ const Products: React.FC = () => {
       setLoading(false);
     }
   };
-
   const fetchCategories = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/categories');
@@ -60,7 +54,6 @@ const Products: React.FC = () => {
       console.error('Error fetching categories:', error);
     }
   };
-
   const handleAddToCart = (product: Product) => {
     if (!user) {
       alert('Please login to add items to cart');
@@ -68,7 +61,6 @@ const Products: React.FC = () => {
     }
     addToCart(product);
   };
-
   const handleAddToWishlist = (product: Product) => {
     if (!user) {
       alert('Please login to add items to wishlist');
@@ -76,13 +68,12 @@ const Products: React.FC = () => {
     }
     addToWishlist(product);
   };
-
   const filteredProducts = products
-    .filter(product => 
+    .filter(product =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .filter(product => 
+    .filter(product =>
       selectedCategory === '' || product.category?.id === selectedCategory
     )
     .sort((a, b) => {
@@ -96,7 +87,6 @@ const Products: React.FC = () => {
           return a.name.localeCompare(b.name);
       }
     });
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,7 +94,6 @@ const Products: React.FC = () => {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Produk Kami</h1>
           <p className="text-xl text-gray-600">Temukan pilihan kebab dan makanan beku kami yang lezat</p>
         </div>
-
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
@@ -119,7 +108,6 @@ const Products: React.FC = () => {
                 className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
               />
             </div>
-
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Filter className="h-5 w-5 text-gray-400" />
@@ -137,8 +125,7 @@ const Products: React.FC = () => {
                 ))}
               </select>
             </div>
-
-            {/* Sort */}
+            {}
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -150,8 +137,7 @@ const Products: React.FC = () => {
             </select>
           </div>
         </div>
-
-        {/* Products Grid */}
+        {}
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
@@ -230,7 +216,6 @@ const Products: React.FC = () => {
             ))}
           </div>
         )}
-
         {filteredProducts.length === 0 && !loading && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">Tidak ada produk yang sesuai.</p>
@@ -240,5 +225,4 @@ const Products: React.FC = () => {
     </div>
   );
 };
-
 export default Products;

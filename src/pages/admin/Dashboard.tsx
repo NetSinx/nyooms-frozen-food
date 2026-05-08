@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { BarChart3, Package, ShoppingCart, TrendingUp } from 'lucide-react';
-
 interface DashboardStats {
   totalCategories: number;
   totalProducts: number;
   totalOrders: number;
   totalRevenue: number;
 }
-
 const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<DashboardStats>({
     totalCategories: 0,
@@ -18,11 +16,9 @@ const AdminDashboard: React.FC = () => {
   });
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
-
   useEffect(() => {
     fetchStats();
   }, []);
-
   const fetchStats = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/dashboard/stats', {
@@ -30,7 +26,6 @@ const AdminDashboard: React.FC = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-
       if (response.ok) {
         const data = await response.json();
         setStats(data);
@@ -41,7 +36,6 @@ const AdminDashboard: React.FC = () => {
       setLoading(false);
     }
   };
-
   const statCards = [
     {
       title: 'Total Categories',
@@ -72,7 +66,6 @@ const AdminDashboard: React.FC = () => {
       bgColor: 'bg-purple-50'
     }
   ];
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,14 +73,13 @@ const AdminDashboard: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
           <p className="text-gray-600 mt-2">Overview of your store performance</p>
         </div>
-
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
           </div>
         ) : (
           <>
-            {/* Stats Cards */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               {statCards.map((card, index) => (
                 <div key={index} className={`${card.bgColor} rounded-lg p-6 border border-gray-200`}>
@@ -103,8 +95,7 @@ const AdminDashboard: React.FC = () => {
                 </div>
               ))}
             </div>
-
-            {/* Quick Actions */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center mb-4">
@@ -121,7 +112,6 @@ const AdminDashboard: React.FC = () => {
                   Manage Categories
                 </a>
               </div>
-
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center mb-4">
                   <div className="bg-green-100 p-3 rounded-lg">
@@ -137,7 +127,6 @@ const AdminDashboard: React.FC = () => {
                   Manage Products
                 </a>
               </div>
-
               <div className="bg-white rounded-lg shadow-md p-6">
                 <div className="flex items-center mb-4">
                   <div className="bg-orange-100 p-3 rounded-lg">
@@ -160,5 +149,4 @@ const AdminDashboard: React.FC = () => {
     </div>
   );
 };
-
 export default AdminDashboard;

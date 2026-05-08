@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Package, Clock, CheckCircle, XCircle } from 'lucide-react';
-
 interface OrderItem {
   productId: string;
   quantity: number;
@@ -11,7 +10,6 @@ interface OrderItem {
     image: string;
   };
 }
-
 interface Order {
   id: string;
   userId: string;
@@ -21,16 +19,13 @@ interface Order {
   createdAt: string;
   shippingAddress: string;
 }
-
 const AdminOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
-
   useEffect(() => {
     fetchOrders();
   }, []);
-
   const fetchOrders = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/orders', {
@@ -38,7 +33,6 @@ const AdminOrders: React.FC = () => {
           'Authorization': `Bearer ${token}`
         }
       });
-
       if (response.ok) {
         const data = await response.json();
         setOrders(data);
@@ -49,7 +43,6 @@ const AdminOrders: React.FC = () => {
       setLoading(false);
     }
   };
-
   const updateOrderStatus = async (orderId: string, status: string) => {
     try {
       const response = await fetch(`http://localhost:3001/api/orders/${orderId}/status`, {
@@ -60,7 +53,6 @@ const AdminOrders: React.FC = () => {
         },
         body: JSON.stringify({ status })
       });
-
       if (response.ok) {
         fetchOrders();
       } else {
@@ -71,7 +63,6 @@ const AdminOrders: React.FC = () => {
       alert('Failed to update order status');
     }
   };
-
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending':
@@ -84,7 +75,6 @@ const AdminOrders: React.FC = () => {
         return <Package className="w-5 h-5 text-gray-500" />;
     }
   };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
@@ -97,7 +87,6 @@ const AdminOrders: React.FC = () => {
         return 'bg-gray-100 text-gray-800';
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -109,12 +98,10 @@ const AdminOrders: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Orders Management</h1>
-
         {orders.length === 0 ? (
           <div className="text-center py-12">
             <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
@@ -153,7 +140,6 @@ const AdminOrders: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="p-6">
                   <div className="space-y-4">
                     {order.items.map((item, index) => (
@@ -177,7 +163,6 @@ const AdminOrders: React.FC = () => {
                       </div>
                     ))}
                   </div>
-
                   <div className="border-t border-gray-200 mt-6 pt-4">
                     <div className="flex justify-between items-center">
                       <div>
@@ -201,5 +186,4 @@ const AdminOrders: React.FC = () => {
     </div>
   );
 };
-
 export default AdminOrders;

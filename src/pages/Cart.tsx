@@ -3,18 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
-
 const Cart: React.FC = () => {
   const { items, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
   const { user, token } = useAuth();
   const navigate = useNavigate();
-
   const handleCheckout = async () => {
     if (!user || !token) {
       alert('Please login to place an order');
       return;
     }
-
     const orderData = {
       items: items.map(item => ({
         productId: item.productId,
@@ -22,9 +19,8 @@ const Cart: React.FC = () => {
         price: item.price
       })),
       totalAmount: getCartTotal(),
-      shippingAddress: 'Default Address' // In a real app, this would be from a form
+      shippingAddress: 'Default Address'
     };
-
     try {
       const response = await fetch('http://localhost:3001/api/orders', {
         method: 'POST',
@@ -34,7 +30,6 @@ const Cart: React.FC = () => {
         },
         body: JSON.stringify(orderData)
       });
-
       if (response.ok) {
         clearCart();
         alert('Order placed successfully!');
@@ -47,7 +42,6 @@ const Cart: React.FC = () => {
       alert('Failed to place order. Please try again.');
     }
   };
-
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -67,12 +61,10 @@ const Cart: React.FC = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
-
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-6">
             {items.map((item) => (
@@ -119,7 +111,6 @@ const Cart: React.FC = () => {
               </div>
             ))}
           </div>
-
           <div className="bg-gray-50 px-6 py-4">
             <div className="flex justify-between items-center mb-4">
               <span className="text-xl font-semibold text-gray-900">Total:</span>
@@ -147,5 +138,4 @@ const Cart: React.FC = () => {
     </div>
   );
 };
-
 export default Cart;

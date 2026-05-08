@@ -17,7 +17,6 @@ import AdminProducts from './pages/admin/Products';
 import AdminCategories from './pages/admin/Categories';
 import AdminOrders from './pages/admin/Orders';
 import ProtectedRoute from './components/ProtectedRoute';
-
 function App() {
   return (
     <Router>
@@ -48,5 +47,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;

@@ -4,7 +4,6 @@ import { ShoppingCart, Heart, Star, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
-
 interface Product {
   id: string;
   name: string;
@@ -16,30 +15,26 @@ interface Product {
     name: string;
   };
 }
-
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
-
   useEffect(() => {
     fetchProducts();
   }, []);
-
   const fetchProducts = async () => {
     try {
       const response = await fetch('http://localhost:3001/api/products');
       const data = await response.json();
-      setProducts(data.slice(0, 6)); // Show only first 6 products on home page
+      setProducts(data.slice(0, 6));
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
       setLoading(false);
     }
   };
-
   const handleAddToCart = (product: Product) => {
     if (!user) {
       alert('Please login to add items to cart');
@@ -47,7 +42,6 @@ const Home: React.FC = () => {
     }
     addToCart(product);
   };
-
   const handleAddToWishlist = (product: Product) => {
     if (!user) {
       alert('Please login to add items to wishlist');
@@ -55,10 +49,9 @@ const Home: React.FC = () => {
     }
     addToWishlist(product);
   };
-
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {}
       <section className="bg-gradient-to-r from-orange-600 via-red-600 to-red-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -90,8 +83,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* Featured Products */}
+      {}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -102,7 +94,6 @@ const Home: React.FC = () => {
               Temukan produk yang paling populer
             </p>
           </div>
-
           {loading ? (
             <div className="flex justify-center items-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
@@ -167,7 +158,6 @@ const Home: React.FC = () => {
               ))}
             </div>
           )}
-
           <div className="text-center mt-12">
             <Link
               to="/products"
@@ -179,7 +169,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
-
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -187,7 +176,6 @@ const Home: React.FC = () => {
               Mengapa Pilih Nyooms?
             </h2>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -200,7 +188,6 @@ const Home: React.FC = () => {
                 Dapatkan makanan favorit Anda yang dikirim dalam keadaan segar dan cepat
               </p>
             </div>
-
             <div className="text-center">
               <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Star className="w-8 h-8 text-red-600" />
@@ -212,7 +199,6 @@ const Home: React.FC = () => {
                 Menggunakan bahan-bahan terbaik dan standar kualitas tertinggi
               </p>
             </div>
-
             <div className="text-center">
               <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-8 h-8 text-red-600" />
@@ -230,5 +216,4 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
 export default Home;
