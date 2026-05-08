@@ -11,7 +11,7 @@ const Profile: React.FC = () => {
     setLoading(true);
     setMessage('');
     try {
-      const response = await fetch('http://localhost:3001/api/user/profile', {
+      const response = await fetch('https://nyooms-frozen-food-8pes.vercel.app/api/user/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

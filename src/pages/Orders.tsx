@@ -27,7 +27,7 @@ const Orders: React.FC = () => {
   }, []);
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/orders', {
+      const response = await fetch('https://nyooms-frozen-food-8pes.vercel.app/api/orders', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

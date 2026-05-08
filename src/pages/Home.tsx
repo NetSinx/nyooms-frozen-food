@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   }, []);
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/products');
+      const response = await fetch('https://nyooms-frozen-food-8pes.vercel.app/api/products');
       const data = await response.json();
       setProducts(data.slice(0, 6));
     } catch (error) {

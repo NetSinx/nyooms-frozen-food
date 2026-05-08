@@ -30,7 +30,7 @@ const ProductDetail: React.FC = () => {
   }, [id]);
   const fetchProduct = async (productId: string) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/products/${productId}`);
+      const response = await fetch(`https://nyooms-frozen-food-8pes.vercel.app/api/products/${productId}`);
       if (response.ok) {
         const data = await response.json();
         setProduct(data);
