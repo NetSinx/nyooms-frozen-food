@@ -33,7 +33,7 @@ export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const addToWishlist = (product: any) => {
     setItems(prevItems => {
       if (prevItems.find(item => item.id === product.id)) {
-        return prevItems;
+        return prevItems.filter(item => item.id !== product.id);
       }
       return [...prevItems, {
         id: product.id,
