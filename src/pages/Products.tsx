@@ -36,7 +36,7 @@ const Products: React.FC = () => {
   }, []);
   const fetchProducts = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/products');
+      const response = await fetch('https://nyooms-frozen-food-8pes.vercel.app/api/products');
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -47,7 +47,7 @@ const Products: React.FC = () => {
   };
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/categories');
+      const response = await fetch('https://nyooms-frozen-food-8pes.vercel.app/api/categories');
       const data = await response.json();
       setCategories(data);
     } catch (error) {
