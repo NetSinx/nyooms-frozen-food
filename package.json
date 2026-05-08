@@ -10,7 +10,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "migrate": "node server/migrate.js"
+    "prebuild": "node server/migrate.js"
   },
   "dependencies": {
     "react": "^18.3.1",
