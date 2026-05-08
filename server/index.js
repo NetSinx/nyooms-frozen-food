@@ -3,28 +3,28 @@ import cors from 'cors';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { testConnection, pool } from './config/database.js';
-import { initializeDatabase } from './config/init-database.js';
+// import { testConnection, pool } from './config/database.js';
+// import { initializeDatabase } from './config/init-database.js';
 import { User } from './models/User.js';
 import { Category } from './models/Category.js';
 import { Product } from './models/Product.js';
 import { Order } from './models/Order.js';
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3001;
+// const PORT = process.env.PORT || 3001;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key';
 app.use(cors());
 app.use(express.json());
-const initializeApp = async () => {
-  try {
-    await testConnection();
-    await initializeDatabase();
-    console.log('🚀 Application initialized successfully');
-  } catch (error) {
-    console.error('❌ Application initialization failed:', error);
-    process.exit(1);
-  }
-};
+// const initializeApp = async () => {
+//   try {
+//     await testConnection();
+//     await initializeDatabase();
+//     console.log('🚀 Application initialized successfully');
+//   } catch (error) {
+//     console.error('❌ Application initialization failed:', error);
+//     process.exit(1);
+//   }
+// };
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -39,12 +39,14 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
 const requireAdmin = (req, res, next) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Admin access required' });
   }
   next();
 };
+
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { email, password, name } = req.body;
@@ -284,7 +286,7 @@ app.get('/api/dashboard/stats', authenticateToken, requireAdmin, async (req, res
   }
 });
 
-module.exports = app;
+export default app;
 // initializeApp().then(() => {
 //   app.listen(PORT, () => {
 //     console.log(`🚀 Server running on port ${PORT}`);
