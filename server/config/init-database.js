@@ -2,7 +2,7 @@ import { pool } from './database.js';
 import bcrypt from 'bcryptjs';
 const initializeDatabase = async () => {
   try {
-    console.log('🔄 Initializing database...');
+    console.log('Initializing database...');
     await pool.execute(`
       CREATE TABLE IF NOT EXISTS categories (
         id VARCHAR(36) PRIMARY KEY,
@@ -83,9 +83,9 @@ const initializeDatabase = async () => {
         VALUES (?, ?, ?, ?, ?, ?, ?)
       `, product);
     }
-    console.log('✅ Database initialized successfully');
+    console.log('Database initialized successfully');
   } catch (error) {
-    console.error('❌ Database initialization failed:', error);
+    console.error('Database initialization failed:', error);
     throw error;
   }
 };
