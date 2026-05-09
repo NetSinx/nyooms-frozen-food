@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
+import { LoadingProvider } from './context/LoadingContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -17,15 +18,17 @@ import AdminProducts from './pages/admin/Products';
 import AdminCategories from './pages/admin/Categories';
 import AdminOrders from './pages/admin/Orders';
 import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
   return (
     <Router>
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <div className="min-h-screen bg-gray-50">
-              <Navbar />
-              <Routes>
+            <LoadingProvider>
+              <div className="min-h-screen bg-gray-50">
+                <Navbar />
+                <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -39,8 +42,9 @@ function App() {
                 <Route path="/admin/produk" element={<ProtectedRoute adminOnly><AdminProducts /></ProtectedRoute>} />
                 <Route path="/admin/kategori" element={<ProtectedRoute adminOnly><AdminCategories /></ProtectedRoute>} />
                 <Route path="/admin/pesanan" element={<ProtectedRoute adminOnly><AdminOrders /></ProtectedRoute>} />
-              </Routes>
-            </div>
+                </Routes>
+              </div>
+            </LoadingProvider>
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>

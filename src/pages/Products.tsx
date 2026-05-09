@@ -149,14 +149,14 @@ const Products: React.FC = () => {
                 key={product.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="relative">
+                <div>
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-48 object-cover"
                   />
                   {product.category && (
-                    <span className="absolute top-2 left-2 bg-orange-600 text-white px-2 py-1 text-xs rounded">
+                    <span className="absolute z-0 top-2 left-2 bg-orange-600 text-white px-2 py-1 text-xs rounded">
                       {product.category.name}
                     </span>
                   )}

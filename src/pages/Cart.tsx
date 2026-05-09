@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
+import { Loading } from '../components/Loading';
+
 const Cart: React.FC = () => {
   const { items, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
   const { user, token } = useAuth();
   const navigate = useNavigate();
+
+  const [isLoading, setLoading] = useState(false);
+
   const handleCheckout = async () => {
     if (!user || !token) {
       alert('Please login to place an order');
@@ -22,6 +27,8 @@ const Cart: React.FC = () => {
       shippingAddress: 'Default Address'
     };
     try {
+      setLoading(true)
+
       const response = await fetch('https://nyooms-frozen-food-8pes.vercel.app/api/orders', {
         method: 'POST',
         headers: {
@@ -40,8 +47,11 @@ const Cart: React.FC = () => {
     } catch (error) {
       console.error('Error placing order:', error);
       alert('Failed to place order. Please try again.');
+    } finally {
+      setLoading(false)
     }
   };
+  
   if (items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -51,7 +61,7 @@ const Cart: React.FC = () => {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
             <p className="text-gray-600 mb-8">Start shopping to add items to your cart</p>
             <Link
-              to="/products"
+              to="/produk"
               className="bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors"
             >
               Continue Shopping
@@ -61,7 +71,10 @@ const Cart: React.FC = () => {
       </div>
     );
   }
+
   return (
+    <>
+    {isLoading ? <Loading /> : null}
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
@@ -136,6 +149,7 @@ const Cart: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 export default Cart;

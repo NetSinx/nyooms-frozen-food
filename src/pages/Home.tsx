@@ -73,7 +73,7 @@ const Home: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="relative">
+            <div>
               <img
                 src="/assets/images/Banner Frozen Food Nyooms.png"
                 alt="Delicious kebab"
@@ -105,7 +105,7 @@ const Home: React.FC = () => {
                   key={product.id}
                   className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
                 >
-                  <div className="relative">
+                  <div>
                     <img
                       src={product.image}
                       alt={product.name}

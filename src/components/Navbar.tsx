@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
@@ -16,12 +16,30 @@ const Navbar: React.FC = () => {
     navigate('/');
     setIsUserMenuOpen(false);
   };
+
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    const handleClick = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  }, [])
+  
+
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
-            <img src="/assets/images/Logo Frozen Food Nyooms.png" alt="Logo" width="50" />
+            <img src="/assets/images/Logo_Frozen_Food_Nyooms.png" alt="Logo" width="50" />
             <span className="text-xl font-bold text-gray-800">Nyooms Frozen Food</span>
           </Link>
           <div className="hidden md:flex items-center space-x-8">
@@ -48,7 +66,7 @@ const Navbar: React.FC = () => {
               </>
             )}
             {user ? (
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors"
