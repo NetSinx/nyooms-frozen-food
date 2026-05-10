@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, ArrowLeft, Plus, Minus } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 interface Product {
   id: string;
   name: string;
@@ -23,6 +24,7 @@ const ProductDetail: React.FC = () => {
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
     if (id) {
       fetchProduct(id);
@@ -43,10 +45,19 @@ const ProductDetail: React.FC = () => {
   };
   const handleAddToCart = () => {
     if (!user) {
-      alert('Please login to add items to cart');
+      navigate("/login")
       return;
     }
     if (product) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: 'Produk ini berhasil ditambahkan ke keranjang',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        timer: 1500,
+      });
       addToCart(product, quantity);
     }
   };
@@ -87,7 +98,7 @@ const ProductDetail: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {}
+        { }
         <Link
           to="/produk"
           className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-8"
@@ -97,7 +108,7 @@ const ProductDetail: React.FC = () => {
         </Link>
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
-            {}
+            { }
             <div className="relative">
               <img
                 src={product.image}
@@ -120,7 +131,7 @@ const ProductDetail: React.FC = () => {
                 </span>
               )}
             </div>
-            {}
+            { }
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
@@ -171,11 +182,10 @@ const ProductDetail: React.FC = () => {
                 </button>
                 <button
                   onClick={handleAddToWishlist}
-                  className={`p-3 rounded-lg border-2 transition-colors ${
-                    isInWishlist(product.id)
+                  className={`p-3 rounded-lg border-2 transition-colors ${isInWishlist(product.id)
                       ? 'bg-red-500 border-red-500 text-white'
                       : 'border-gray-300 text-gray-700 hover:border-red-500 hover:text-red-500'
-                  }`}
+                    }`}
                 >
                   <Heart className="w-5 h-5" />
                 </button>

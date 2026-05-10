@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { User, Mail, Save } from 'lucide-react';
 const Profile: React.FC = () => {
-  const { user, token } = useAuth();
+  const { user, token, updateUser } = useAuth();
   const [name, setName] = useState(user?.name || '');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -22,8 +22,7 @@ const Profile: React.FC = () => {
       if (response.ok) {
         setMessage('Profile updated successfully!');
         if (user) {
-          const updatedUser = { ...user, name };
-          localStorage.setItem('user', JSON.stringify(updatedUser));
+          updateUser({ ...user, name });
         }
       } else {
         setMessage('Failed to update profile');
@@ -34,6 +33,13 @@ const Profile: React.FC = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name);
+    }
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">

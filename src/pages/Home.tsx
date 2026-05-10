@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, Star, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
+
 interface Product {
   id: string;
   name: string;
@@ -21,6 +23,7 @@ const Home: React.FC = () => {
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -37,9 +40,29 @@ const Home: React.FC = () => {
   };
   const handleAddToCart = (product: Product) => {
     if (!user) {
-      alert('Please login to add items to cart');
-      return;
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Produk gagal ditambahkan ke keranjang',
+      //   text: 'User harus login terlebih dahulu untuk menambahkan produk ke keranjang',
+      //   showConfirmButton: true,
+      //   allowOutsideClick: false,
+      //   allowEscapeKey: false,
+      // });
+      // return;
+      navigate("/login");
+      return
     }
+    
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil',
+      text: 'Produk ini berhasil ditambahkan ke keranjang',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      timer: 1500,
+    });
+
     addToCart(product);
   };
   const handleAddToWishlist = (product: Product) => {

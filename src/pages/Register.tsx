@@ -54,7 +54,7 @@ const Register: React.FC = () => {
           <div className="text-center">
             <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <img
-                src="/assets/images/Logo Frozen Food Nyooms.png"
+                src="/assets/images/Logo_Frozen_Food_Nyooms.png"
                 alt="Logo"
               />
             </div>

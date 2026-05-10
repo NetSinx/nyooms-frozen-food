@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, Search, Filter } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
 interface Product {
   id: string;
   name: string;
@@ -30,6 +31,7 @@ const Products: React.FC = () => {
   const { addToCart } = useCart();
   const { addToWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
     fetchProducts();
     fetchCategories();
@@ -56,9 +58,20 @@ const Products: React.FC = () => {
   };
   const handleAddToCart = (product: Product) => {
     if (!user) {
-      alert('Please login to add items to cart');
+      navigate('/login');
       return;
     }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil',
+      text: 'Produk ini berhasil ditambahkan ke keranjang',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      timer: 1500,
+    });
+
     addToCart(product);
   };
   const handleAddToWishlist = (product: Product) => {
@@ -125,7 +138,7 @@ const Products: React.FC = () => {
                 ))}
               </select>
             </div>
-            {}
+            { }
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -137,7 +150,7 @@ const Products: React.FC = () => {
             </select>
           </div>
         </div>
-        {}
+        { }
         {loading ? (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
@@ -162,11 +175,10 @@ const Products: React.FC = () => {
                   )}
                   <button
                     onClick={() => handleAddToWishlist(product)}
-                    className={`absolute top-2 right-2 p-2 rounded-full transition-colors ${
-                      isInWishlist(product.id)
+                    className={`absolute top-2 right-2 p-2 rounded-full transition-colors ${isInWishlist(product.id)
                         ? 'bg-red-500 text-white'
                         : 'bg-white text-gray-600 hover:bg-red-500 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <Heart className="w-4 h-4" />
                   </button>

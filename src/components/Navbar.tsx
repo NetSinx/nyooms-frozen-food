@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { ShoppingCart, Heart, User, Menu, X, LogOut, Settings } from 'lucide-react';
+import Swal from 'sweetalert2';
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { getCartCount } = useCart();
@@ -13,6 +14,15 @@ const Navbar: React.FC = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const handleLogout = () => {
     logout();
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil',
+      text: 'Anda berhasil logout',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      timer: 1500,
+    });
     navigate('/');
     setIsUserMenuOpen(false);
   };
@@ -32,7 +42,6 @@ const Navbar: React.FC = () => {
       document.removeEventListener('mousedown', handleClick)
     }
   }, [])
-  
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -129,7 +138,7 @@ const Navbar: React.FC = () => {
               </div>
             )}
           </div>
-          {}
+          { }
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -139,7 +148,7 @@ const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
-        {}
+        { }
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
