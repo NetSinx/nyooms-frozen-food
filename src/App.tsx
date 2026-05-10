@@ -18,6 +18,7 @@ import AdminProducts from './pages/admin/Products';
 import AdminCategories from './pages/admin/Categories';
 import AdminOrders from './pages/admin/Orders';
 import ProtectedRoute from './components/ProtectedRoute';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>
+      <ScrollToTop />
     </Router>
   );
 }

@@ -77,7 +77,7 @@ const ProductDetail: React.FC = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Product not found</h1>
-          <Link to="/products" className="text-orange-600 hover:text-orange-700">
+          <Link to="/produk" className="text-orange-600 hover:text-orange-700">
             ← Back to Products
           </Link>
         </div>
@@ -89,7 +89,7 @@ const ProductDetail: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {}
         <Link
-          to="/products"
+          to="/produk"
           className="inline-flex items-center text-orange-600 hover:text-orange-700 mb-8"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
